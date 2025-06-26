@@ -5,6 +5,7 @@ void reorderList(ListNode* head) {
         //finding the middle of the linked list
         //the slow pointer will reach the middle
         while(fast != nullptr && fast->next != nullptr) {
+        //we use && because we want the loop to continue only when both fast and fast->next are valid
             slow = slow->next;
             fast = fast->next->next;
         }
