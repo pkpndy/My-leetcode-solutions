@@ -15,7 +15,8 @@ public:
         ListNode* groupPrev = dummy; //pointing the end of previous group at this dummy
 
         while(true) {
-            ListNode* kth = getKth(groupPrev, k);
+            ListNode* kth = getKth(groupPrev, k); //we want to get the kth after groupPrev node
+            //this means in we want to get the kth node in our current group
             if(!kth) { //if the group end but we didn't find k in during any iteration
                 break; //break as we don't need to reverse as this group doesn't have k nodes
             }
