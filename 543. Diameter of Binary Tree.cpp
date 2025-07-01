@@ -22,7 +22,7 @@ private:
 
         int lh = height(node->left, maxi); //height of left subtree
         int rh = height(node->right, maxi); //height of right subtree
-        maxi = max(maxi, lh+rh); //max diameter considering all the nodes as turning points
-        return 1 + max(lh, rh); //max height return
+        maxi = max(maxi, lh+rh); //calculating max diameter with each node as turning points
+        return 1 + max(lh, rh); //max height from on current node return
     }
 };
