@@ -17,7 +17,8 @@ private:
 
         //whenever a new level is reached push the right most node as we go right first
         if(level == ans.size()) ans.push_back(node->val);
-        reversepdt(node->right, ans, level+1); //go right
+        reversepdt(node->right, ans, level+1); //go right increase the level
+        //on backtracking the level automatically goes back to its previous value
         reversepdt(node->left, ans, level+1); //then go left
     }
     

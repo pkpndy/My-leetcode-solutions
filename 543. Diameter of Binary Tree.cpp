@@ -12,17 +12,17 @@
 class Solution {
 public:
     int diameterOfBinaryTree(TreeNode* root) {
-        int maxi = 0;
-        height(root, maxi);
-        return maxi;
+        int diameter = 0;
+        height(root, diameter);
+        return diameter;
     }
 private:
-    int height(TreeNode* node, int& maxi) {
+    int height(TreeNode* node, int& diameter) {
         if(node == nullptr) return 0; //if reached nullptr 
 
-        int lh = height(node->left, maxi); //height of left subtree
-        int rh = height(node->right, maxi); //height of right subtree
-        maxi = max(maxi, lh+rh); //calculating max diameter with each node as turning points
+        int lh = height(node->left, diameter); //height of left subtree
+        int rh = height(node->right, diameter); //height of right subtree
+        diameter = max(diameter, lh+rh); //calculating max diameter with each node as turning points
         return 1 + max(lh, rh); //max height from on current node return
     }
 };

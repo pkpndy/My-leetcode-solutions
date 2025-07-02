@@ -23,7 +23,8 @@ public:
         } else if(p->val > root->val && q->val > root->val) { //case where both are greater
             return lowestCommonAncestor(root->right, p, q);
         } else {
-            return root; //case where both of them are either equal or greater or smaller
+            //case where both of them are either equal or greater or smaller
+            return root; //in that case this node will be the ancestor
         }
     }
 
@@ -34,12 +35,13 @@ public:
         TreeNode* curr = root;
 
         while(curr) {
-            if(p->val < curr->val && q->val < curr->val) {
+            if(p->val < curr->val && q->val < curr->val) { //case where both are smaller
                 curr = curr->left;
-            } else if(p->val > curr->val && q->val > curr->val) {
+            } else if(p->val > curr->val && q->val > curr->val) { //case where both are greater
                 curr = curr->right;
             } else {
-                return curr;
+                //case where both of them are either equal or greater or smaller
+                return curr; //in that case this node will be the ancestor
             }
         }
         return nullptr;
