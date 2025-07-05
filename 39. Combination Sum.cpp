@@ -8,11 +8,13 @@ void giveC(int i, vector<vector<int>>& ans, vector<int> ds, vector<int>& candida
         }
         return;
     }
+    //the three lines in this are for pick
     if(candidates[i] <=target) { //if the number we reached is smaller than our target right now
         ds.push_back(candidates[i]); //then push the number to the current data structure
         giveC(i, ans, ds, candidates, target-candidates[i]); //take and call again
-        ds.pop_back(); // now before going remove the number we added
+        ds.pop_back(); // now before going remove the number we added (backtrack)
     }
+    //this one line is for not pick
     giveC(i+1, ans, ds, candidates, target); //not take and move ahead
 }
 public:
