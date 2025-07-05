@@ -2,7 +2,7 @@ class Solution {
 private:
     void giveC(int idx, vector<vector<int>>& ans, vector<int> ds, vector<int>& arr, int target)
     {
-        if(target == 0) {
+        if(target == 0) { // base case if we got what we wanted
             ans.push_back(ds);
             return;
         }
