@@ -53,3 +53,13 @@ public:
         return ans;
     }
 };
+
+/*
+
+Take/Not Take (idx+1):
+
+We're making a decision about element at position idx
+Next call decides about element at position idx+1
+Linear progression through array
+
+*/
