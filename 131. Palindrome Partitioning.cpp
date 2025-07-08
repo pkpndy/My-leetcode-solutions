@@ -32,6 +32,7 @@ public:
         }
 
         //in each call we check for possible partition from that point till last
+        //idx decides for the first partition segment and then i for further partition
         for(int i = idx; i<s.size(); i++) {
             if(isPalindrome(s, idx, i)){ //check for the substring from current index till i
                 //in substr the end is exclusive hence we do +1 to also include the last character

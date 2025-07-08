@@ -1,15 +1,25 @@
 /*
 Call(idx=0, ds=[]):
 ├── Add [] ✓ (current subset)
-├── i=0: ds=[1]
+├── i=0: nums[0]=1, ds=[1]
 │   └── Call(idx=1, ds=[1]):
 │       ├── Add [1] ✓ (current subset)
-│       └── i=1: ds=[1,2]
-│           └── Call(idx=2, ds=[1,2]):
-│               └── Add [1,2] ✓ (current subset)
-└── i=1: ds=[2]
-    └── Call(idx=2, ds=[2]):
-        └── Add [2] ✓ (current subset)
+│       ├── i=1: nums[1]=2 (first 2), ds=[1,2]
+│       │   └── Call(idx=2, ds=[1,2]):
+│       │       ├── Add [1,2] ✓ (current subset)
+│       │       └── i=2: nums[2]=2 (second 2), ds=[1,2,2]
+│       │           └── Call(idx=3, ds=[1,2,2]):
+│       │               └── Add [1,2,2] ✓ (current subset)
+│       └── i=2: nums[2]=2 (second 2)
+│           ├── Skip! (i=2 > idx=1 && nums[2] == nums[1]) → continue
+├── i=1: nums[1]=2 (first 2), ds=[2]
+│   └── Call(idx=2, ds=[2]):
+│       ├── Add [2] ✓ (current subset)
+│       └── i=2: nums[2]=2 (second 2), ds=[2,2]
+│           └── Call(idx=3, ds=[2,2]):
+│               └── Add [2,2] ✓ (current subset)
+└── i=2: nums[2]=2 (second 2)
+    └── Skip! (i=2 > idx=0 && nums[2] == nums[1]) → continue
 */
 
 //  "I have a valid subset right now. Let me also try extending it with remaining elements."

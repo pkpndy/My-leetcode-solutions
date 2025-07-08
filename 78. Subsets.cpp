@@ -1,13 +1,25 @@
 /*
-Call(idx=0): nums[0]=1
+Call(idx=0, ds=[]): nums[0]=1
 ├── TAKE 1: ds=[1]
-│   └── Call(idx=1): nums[1]=2  
-│       ├── TAKE 2: ds=[1,2] → Add [1,2]
-│       └── NOT TAKE 2: ds=[1] → Add [1]
+│   └── Call(idx=1, ds=[1]): nums[1]=2
+│       ├── TAKE 2: ds=[1,2]
+│       │   └── Call(idx=2, ds=[1,2]): nums[2]=3
+│       │       ├── TAKE 3: ds=[1,2,3] → Call(idx=3) → Add [1,2,3] ✓
+│       │       └── NOT TAKE 3: ds=[1,2] → Call(idx=3) → Add [1,2] ✓
+│       └── NOT TAKE 2: ds=[1]
+│           └── Call(idx=2, ds=[1]): nums[2]=3
+│               ├── TAKE 3: ds=[1,3] → Call(idx=3) → Add [1,3] ✓
+│               └── NOT TAKE 3: ds=[1] → Call(idx=3) → Add [1] ✓
 └── NOT TAKE 1: ds=[]
-    └── Call(idx=1): nums[1]=2
-        ├── TAKE 2: ds=[2] → Add [2]  
-        └── NOT TAKE 2: ds=[] → Add []
+    └── Call(idx=1, ds=[]): nums[1]=2
+        ├── TAKE 2: ds=[2]
+        │   └── Call(idx=2, ds=[2]): nums[2]=3
+        │       ├── TAKE 3: ds=[2,3] → Call(idx=3) → Add [2,3] ✓
+        │       └── NOT TAKE 3: ds=[2] → Call(idx=3) → Add [2] ✓
+        └── NOT TAKE 2: ds=[]
+            └── Call(idx=2, ds=[]): nums[2]=3
+                ├── TAKE 3: ds=[3] → Call(idx=3) → Add [3] ✓
+                └── NOT TAKE 3: ds=[] → Call(idx=3) → Add [] ✓
 */
 
 //  "I'm building a subset by making decisions. Only add when all decisions are made."
