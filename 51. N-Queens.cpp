@@ -23,9 +23,11 @@ public:
         for(int i=r-1; i>=0; i--) { //check for the above direction
             if(board[i][c] == 'Q')  return false;
         }
+        //using && for condition check because end the loop if any one of them becomes false
         for(int i=r-1,j=c-1; i>=0 && j>=0; j--, i--) { //check for left diagonal above
             if(board[i][j] == 'Q')  return false;
         }
+        //using && for condition check because end the loop if any one of them becomes false
         for(int i=r-1,j=c+1; i>=0 && j<board.size(); i--, j++) { //check for right diagonal above
             if(board[i][j] == 'Q')  return false;
         }
