@@ -62,7 +62,7 @@ public:
             }
             dp = curr;
         }
-        return dp[n-1]; //the final answer gets stored in the end of the dp array
+        return dp[n-1]; //curr gets destroyed once out of the for loop, hence dp array will have the answer
     }
     */
 

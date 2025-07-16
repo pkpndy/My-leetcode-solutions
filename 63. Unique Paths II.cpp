@@ -46,9 +46,38 @@ public:
                 if(i>0) up = dp[i-1][j];
                 if(j>0) left = dp[i][j-1];
                 dp[i][j] = up + left;
-                }
+            }
         }
         return dp[m-1][n-1];
+    }
+    */
+
+    /*
+    //this is space optimised solution TC:O(n X m) SC:O(1)
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        int m = obstacleGrid.size();
+        int n = obstacleGrid[0].size();
+        vector<int> prevRow(n, 0);
+
+        // prevRow[0] = obstacleGrid[0][0] == 0 ? 1:0; //if the starting cell is blocked
+
+        for(int i=0; i<m; i++) {
+            vector<int> curr(n, 0);
+            for(int j=0; j<n; j++) {
+                if(obstacleGrid[i][j] == 1) {  // Check if current cell is blocked
+                    curr[j] = 0;              // Set paths to this cell as 0
+                }
+                else if(i==0 && j==0)    curr[j] = 1; //if we reach end to start we get a path
+                else {
+                    int up=0, left=0;
+                    if(i>0) up = prevRow[j]; //previous row has all the up elements
+                    if(j>0) left = curr[j-1]; //left
+                    curr[j] = (up + left); 
+                }
+            }
+            prevRow = curr;
+        }
+        return prevRow[n-1]; //curr gets destroyed once out of the for loop hence prevRow array will have the answer
     }
     */
 
