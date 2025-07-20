@@ -64,7 +64,7 @@ public:
         for(int i=0; i<m; i++) {
             vector<int> curr(n, 0);
             for(int j=0; j<n; j++) {
-                if(i==0 && j==0)    curr[j] = grid[i][j]; //base case will give the value at 0,0
+                if(i==0 && j==0)    curr[j] = grid[i][j]; //base case will give the value at i==0,j==0
                 else if (i==0)  curr[j] = grid[i][j] + curr[j-1]; //if its the first row
                 else if (j==0)  curr[j] = grid[i][j] + prev[j]; //if its the first column
                 else {
