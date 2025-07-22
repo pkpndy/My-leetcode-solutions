@@ -19,7 +19,7 @@ public:
         //this means subset1==subset2==TotalSum/2
         //and if TotalSum is odd then return false as odd number can't be divided into two equal parts
 
-        //HENCE WE ARE LOOKING FOR A SUBSET WITH SUM TOALSUM/2
+        //HENCE WE ARE LOOKING FOR A SUBSE T WITH SUM TOALSUM/2
         //hence this is a question of subset with a target sum
         int n = nums.size();
         int totalSum = accumulate(nums.begin(), nums.end(), 0);
@@ -27,7 +27,7 @@ public:
         if(totalSum%2 != 0) return false; //odd sum case
         
         int target = totalSum/2;
-        vector<vector<int>> dp(n, vector<int> (target+1, -1)); //+1 is needed for result of last index
+        vector<vector<int>> dp(n, vector<int> (target+1, -1)); //+1 is needed as index is zero based
         return f(n-1, target, nums, dp);
     }
 
@@ -35,30 +35,33 @@ public:
     //tabulated solution
     bool canPartition(vector<int>& nums) {
         int n = nums.size();
-        int totalSum = accumulate(nums.begin(), nums.end(), 0);
-        
-        if(totalSum%2 != 0) return false; //odd sum case
-        
-        int target = totalSum/2;
-        vector<vector<int>> dp(n, vector<int> (target+1, 0)); //+1 is needed for result of last index
-        
-        for(int i=0; i<n; i++) {
-            dp[i][0] = true; //target 0 is always achievable (empty subset) at any index
-        }
-        if(nums[0] <= target)   dp[0][nums[0]] = true;
 
-        for(int i=1; i<n; i++) {
-            for(int k=1; k<=target; k++) {
-                bool notTake = dp[i-1][k];
-                bool take = false;
-                if(nums[i] <= k) {
-                    take = dp[i-1][k-nums[i]];
+        int totalSum = accumulate(nums.begin(), nums.end(), 0);
+        if(totalSum%2 != 0)    return false;
+        int total = totalSum/2;
+        
+        //+1 is needed for result of last index
+        vector<vector<bool>> dp(n, vector<bool> (total+1, false));
+        
+        for(int j=0; j<n; j++) {
+            dp[j][0] = true; //target 0 is always achievable at any index, not picking anything
+        }
+        if(nums[0] <= total) {
+            dp[0][nums[0]] = true; // Only at 0th index, the number itself is possible target
+        }
+
+        for(int i=1; i<n; i++) { //start from 1 coz dp[i-1] will give error id we start from 0
+            for(int j=1; j<=total; j++) { //we filled the entire target=0 column
+                int notTake = dp[i-1][j];
+                int take = false;
+                if(nums[i] <= j) {
+                    take = dp[i-1][j-nums[i]];
                 }
-                dp[i][k] = notTake || take;
+                dp[i][j] = notTake || take;
             }
         }
-
-        return dp[n-1][target];
+    
+        return dp[n-1][total];
     }
     */
 

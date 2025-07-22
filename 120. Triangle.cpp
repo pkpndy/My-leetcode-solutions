@@ -8,7 +8,7 @@ public:
             return triangle[i][j]; //return the value of the element
         }
 
-        if(dp[i][j] != -1)  return dp[i][j];
+        if(dp[i][j] != 1e7)  return dp[i][j];
 
         int down = triangle[i][j] + triMin(i+1, j, triangle, dp); //add the element and go down
         int diagonal = triangle[i][j] + triMin(i+1, j+1, triangle, dp); //add the element and go diagonal
@@ -19,7 +19,7 @@ public:
     int minimumTotal(vector<vector<int>>& triangle) {
         vector<vector<int>> dp; //don't give the size to dp vector as it will places zeros
         for(int i=0; i<triangle.size(); i++) {
-            dp.push_back(vector<int>(i+1, -1));
+            dp.push_back(vector<int>(i+1, 1e7)); //not using -1 because a test case had -1 also filled
         }
         return triMin(0,0,triangle, dp); //we start from the first element
     }
