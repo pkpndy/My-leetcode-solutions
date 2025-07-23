@@ -40,7 +40,7 @@ public:
         if(totalSum%2 != 0)    return false;
         int total = totalSum/2;
         
-        //+1 is needed for result of last index
+        //+1 is needed as the indexing is zero based and we need to mark the exact number
         vector<vector<bool>> dp(n, vector<bool> (total+1, false));
         
         for(int j=0; j<n; j++) {
@@ -50,7 +50,7 @@ public:
             dp[0][nums[0]] = true; // Only at 0th index, the number itself is possible target
         }
 
-        for(int i=1; i<n; i++) { //start from 1 coz dp[i-1] will give error id we start from 0
+        for(int i=1; i<n; i++) { //we start after first row as we have marked whatever is achievable by the 0th index
             for(int j=1; j<=total; j++) { //we filled the entire target=0 column
                 int notTake = dp[i-1][j];
                 int take = false;
