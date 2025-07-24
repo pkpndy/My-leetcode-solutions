@@ -20,23 +20,23 @@ Hence the output will be 3. Please note that both 1 present in 'arr' are treated
 const int MOD = 1e9 + 7; // 
 
 //this is memoized recursive solution but it wont work for large test cases, use tabulation
-int subsetSumK(int n, vector<int>& arr, int k, vector<vector<int>>& dp) {
-	// If no elements left (n == 0):
-	if (n == 0) {
+int subsetSumK(int ind, vector<int>& arr, int k, vector<vector<int>>& dp) {
+	// If no elements left (ind == 0):
+	if (ind == 0) {
 		// Only arr[0] left:
 		if (k == 0 && arr[0] == 0) return 2; // two ways: pick or not pick 0
 		if (k == 0 || arr[0] == k) return 1; // one way: pick nothing or pick only this
 		return 0;
 	}
 
-	if(dp[n][k] != -1)	return dp[n][k];
+	if(dp[ind][k] != -1)	return dp[ind][k];
 
-	int notTake = subsetSumK(n-1, arr, k, dp);
+	int notTake = subsetSumK(ind-1, arr, k, dp);
 	int take = 0;
-	if(arr[n] <= k) {
-		take = subsetSumK(n-1, arr, k-arr[n], dp);
+	if(arr[ind] <= k) {
+		take = subsetSumK(ind-1, arr, k-arr[ind], dp);
 	}
-	return dp[n][k] = (take + notTake) % MOD;
+	return dp[ind][k] = (take + notTake) % MOD;
 }
 
 
