@@ -2,16 +2,17 @@
 
 //recursive memoized solution
 int giveMax(int n, int* wt, int* val, int cap, vector<vector<int>>& dp) {
-	if(n==0) {
-		if(wt[n] <= cap)	return val[n];
-		else	return 0;
+	if(n==0) { //if we reached the last element
+		if(wt[n] <= cap)	return val[n];//if the weight of the last element is < capacity, take it
+		else	return 0; //else don't take any value
 	}
 
 	if(dp[n][cap] != -1)	return dp[n][cap];
 
-	int notTake = 0 + giveMax(n-1, wt, val, cap, dp);
+	int notTake = 0 + giveMax(n-1, wt, val, cap, dp); //dont take, not value added
 	int take = -1e8;
 	if(wt[n] <= cap) {
+		//add the value and take it also decrease the capacity left
 		take = val[n] + giveMax(n-1, wt, val, cap-wt[n], dp);
 	}
 
@@ -34,11 +35,10 @@ int knapsack(int *weights, int *values, int n, int maxWeight)
 	// 	else	return 0;
 	// }
 
-	//in the recursion base case we had for i==0, values[0] for
-	//all weights below capacity, so we fill the values[0] for them
-	//rest all will automatically be 0, as dp was initialised with 0
+	//since the table starts from 0 but we can only take the item(value) from its weight index, 
+	//and till the maxweight, so we fill the value taken
 	for(int i=weights[0]; i<=maxWeight; i++) {
-		dp[0][i] = values[0];
+		dp[0][i] = values[0]; 
 	}
 
 	for(int i=1; i<n; i++) {
