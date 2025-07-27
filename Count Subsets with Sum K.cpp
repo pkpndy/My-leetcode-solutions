@@ -17,7 +17,7 @@ Explanation: The possible ways are:
 Hence the output will be 3. Please note that both 1 present in 'arr' are treated differently.
 */
 
-const int MOD = 1e9 + 7; // 
+const int MOD = 1e9 + 7;
 
 //this is memoized recursive solution but it wont work for large test cases, use tabulation
 int subsetSumK(int ind, vector<int>& arr, int k, vector<vector<int>>& dp) {
