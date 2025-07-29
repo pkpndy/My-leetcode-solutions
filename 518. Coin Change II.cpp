@@ -25,7 +25,7 @@ public:
     //tabulated solution
     int change(int amount, vector<int>& coins) {
         int n = coins.size();
-        vector<vector<unsigned long long>> dp(n, vector<unsigned long long> (amount+1, 0));
+        vector<vector<unsigned int>> dp(n, vector<unsigned int> (amount+1, 0));
         
         for(int i=0; i<=amount; i++) {
             if(i % coins[0] == 0 )  dp[0][i] = 1;
@@ -34,8 +34,8 @@ public:
 
         for(int i=1; i<n; i++) {
             for(int j=0; j<=amount; j++) {
-                unsigned long long notTake = dp[i-1][j];
-                unsigned long long take = 0;
+                unsigned int notTake = dp[i-1][j];
+                unsigned int take = 0;
                 if(coins[i] <= j)   take = dp[i][j-coins[i]];
 
                 dp[i][j] = notTake+take;
@@ -48,7 +48,7 @@ public:
     //space optimised
     int change(int amount, vector<int>& coins) {
         int n = coins.size();
-        vector<unsigned long long> prev(amount+1, 0);
+        vector<unsigned int> prev(amount+1, 0);
         
         for(int i=0; i<=amount; i++) {
             if(i % coins[0] == 0 )  prev[i] = 1;
@@ -56,10 +56,10 @@ public:
         }
 
         for(int i=1; i<n; i++) {
-            vector<unsigned long long> curr(amount+1, 0);
+            vector<unsigned int> curr(amount+1, 0);
             for(int j=0; j<=amount; j++) {
-                unsigned long long notTake = prev[j];
-                unsigned long long take = 0;
+                unsigned int notTake = prev[j];
+                unsigned int take = 0;
                 if(coins[i] <= j)   take = curr[j-coins[i]];
 
                 curr[j] = notTake+take;
