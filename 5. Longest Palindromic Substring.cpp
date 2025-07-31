@@ -2,7 +2,7 @@ class Solution {
 public:
     //if got chance look for Manacher's algorithm
 
-    /*
+    
     //this is "expand around centers approach" takes TC:O(n^2)
     string longestPalindrome(string s) {
         string res = "";
@@ -34,9 +34,7 @@ public:
         }
         return res;
     }
-    */
-
-    /*
+    
     //this is brute force approach having TC:O(n^3) solution 
     void giveSubstrings(int idx, string& longest, string& s) {
         if(idx == s.size()) {
@@ -67,5 +65,5 @@ public:
         giveSubstrings(0, longest, s);
         return longest;
     }
-    */
+    
 };
