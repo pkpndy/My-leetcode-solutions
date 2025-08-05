@@ -102,6 +102,7 @@ public:
 
                 // Find the position to replace in the 'tails' vector.
                 int idx = lower_bound(res.begin(), res.end(), nums[i]) - res.begin(); //lower_bound uses binary search
+                //the lower_bound function returns an iterator, to get the index use - res.begin() iterator, it give the index of the element
                 res[idx] = nums[i];
             }
         }

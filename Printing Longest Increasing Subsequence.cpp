@@ -21,25 +21,25 @@ Explanation: All these three subsequences are valid Longest Increasing Subsequen
 vector<int> printingLongestIncreasingSubsequence(vector<int> arr, int n) {
 	//we will use hash array to store the index of the previous element of LIS
 	vector<int> dp(n, 1), hash(n);
+	int maxi = INT_MIN; //storing the max value and its index helps in printing the LIS
+	int lastIndex = -1;
+
 	for(int ind=0; ind<n; ind++) {
 		//this will be usefult to end the storing of elements in the result array
 		hash[ind] = ind;
 
 		for(int prev=0; prev<ind; prev++) {
-			//only updating the dp array if greater value is found
+			//if element at previous(arr[prev]) is smaller than current index element
+			//and if adding the LIS till previous element(1 + dp[prev]) > LIS till current element(dp[ind]) till now
 			if(arr[prev] < arr[ind] && 1 + dp[prev] > dp[ind]) {
 				dp[ind] = 1 + dp[prev];
 				hash[ind] = prev; //storing the index of the element 
 			}
 		}
-	}
 
-	int maxi = INT_MIN;
-	int lastIndex = -1;
-	for(int i=0; i<n; i++) {
-		if(dp[i] > maxi) {
-			maxi = dp[i]; //finding the max element
-			lastIndex = i; //getting its index
+		if(dp[ind] > maxi) {
+			maxi = dp[ind]; //finding the max element
+			lastIndex = ind; //storing its index
 		}
 	}
 
