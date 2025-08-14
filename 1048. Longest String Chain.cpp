@@ -5,12 +5,12 @@ public:
         //the longer word should be only one character longer
         if(str2.size() != str1.size() + 1)  return false;
         int i=0, j=0;
-        while(j < str2.size()) { //till the longer word doesn't get traversed
+        while(j < str2.size()) { //since j will cross the word if it doesn't find any match
             //till shorter word is not traversed and characters in both match
             if(i < str1.size() && str1[i] == str2[j]) {
                 i++; j++; //move the pointers forward
             } else {
-                j++; //move the pointer in the longer word forward
+                j++; //move j if chars dont match
             }
         }
         if(i == str1.size() && j == str2.size())    return true; //return true if both completed traversal
