@@ -25,6 +25,9 @@ a     0  0  1  2
 c     0  1  1  2
 */
 
+//It stores the length of the Longest Common Subsequence
+//between the first i characters of str1 and the first j characters of str2.
+
     string shortestCommonSupersequence(string str1, string str2) {
         int n = str1.size();
         int m = str2.size();
