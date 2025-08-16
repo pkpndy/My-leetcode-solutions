@@ -52,3 +52,23 @@ int matrixMultiplication(vector<int> &arr, int N)
     //we start with 1 bcoz the size of any matrix from the array is arr[i-1] X arr[i]
     return minops(1, N-1, arr, dp);
 }
+
+int matrixMultiplication(vector<int> &arr, int N)
+{
+    vector<vector<int>> dp(N, vector<int> (N));
+    for(int i=0; i<N; i++) dp[i][i] = 0; //when i==j it gave 0
+    //opposite of i went from left to right in the recursive solution, 
+    //so here it will go right to left
+    for(int i=N-1; i>=1; i--) {
+        for(int j=i+1; j<N; j++) {//j will go left to right, but j can't be <= i
+            int mini = 1e9; //we want to calculate the min, hence taking the max value
+            for(int k=i; k<j; k++) { //k=i to j-1 because after partition there is k and k+1
+                int steps = arr[i-1] * arr[k] * arr[j] + dp[i][k] + dp[k+1][j];
+                mini = min(mini, steps);
+                dp[i][j] = mini;
+            }
+        }
+    }
+
+    return dp[1][N-1]; //in the end i will reach 1 and j will reach n-1
+}
