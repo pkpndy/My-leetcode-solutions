@@ -63,4 +63,46 @@ public:
 
         return res;
     }
+
+    //bfs traversal implementation
+    int numIslands(vector<vector<char>>& grid) {
+        int m = grid.size();
+        int n = grid[0].size();
+        int res = 0;
+
+        queue<pair<int, int>> q; //for storing the row, column
+        vector<vector<int>> vis(m, vector<int> (n, 0));
+
+        //{up, right, down, left}
+        int dr[] = {-1, 0, 1, 0}; //direction row
+        int dc[] = {0, 1, 0, -1}; //direction column
+
+        for(int i=0; i<m; i++) {
+            for(int j=0; j<n; j++) {
+                if(!vis[i][j] && grid[i][j] == '1') { //if it's a '1' and is not visited
+                    res++; //weeeeee found an island
+                    vis[i][j] = 1; //mark this positon as visited
+                    q.push({i, j}); //push it in the queue
+
+                    while(!q.empty()) { //keep exploring till all the connected positions are explored
+                        auto [r, c] = q.front(); //extract the row, column from the front of queue
+                        q.pop(); //pop the front rol, col pair
+
+                        for(int k=0; k<4; k++) { //for checking all directions of the extracted position
+                            int nr = r+dr[k]; //current row position + row direction
+                            int nc = c+dc[k]; //current col position + col direction
+
+                            //check if new row position or new column position are not out of bounds 0 <= pos < size
+                            if(nr>=0 && nr<m && nc>=0 && nc<n && grid[nr][nc] == '1' && !vis[nr][nc]) { 
+                                vis[nr][nc] = 1; //mark this new position as visited and 
+                                q.push({nr, nc}); //push it to the queue so that its connected positions can be checked
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return res;
+    }
 };
