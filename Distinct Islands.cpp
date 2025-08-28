@@ -45,3 +45,46 @@ int distinctIslands(int** arr, int n, int m)
 
     return st.size();
 }
+
+//bfs traversal solution
+int distinctIslands(int** arr, int n, int m)
+{
+    vector<vector<int>> vis(n, vector<int> (m, 0));
+    set<vector<pair<int, int>>> st;
+    queue<pair<int, int>> q;
+
+    static int dr[] = {-1, 0, 1, 0};
+    static int dc[] = {0, -1, 0, 1};
+
+    for(int i=0; i<n; i++) {
+        for(int j=0; j<m; j++) {
+            vector<pair<int, int>> shape;
+            if(!vis[i][j] && arr[i][j] == 1) {
+                vis[i][j]=1;
+                q.push({i, j});
+                while(!q.empty()) {
+                    int r = q.front().first;
+                    int c = q.front().second;
+                    q.pop();
+                    //storing the difference from the base(starting point),
+                    //so that the same shape in different area of the matrix can be identified
+                    shape.push_back({r-i, c-j});
+
+                    for(int k=0; k<4; k++) {
+                        int nr = r+dr[k];
+                        int nc = c+dc[k];
+
+                        if(nr>=0 && nc>=0 && nr<n && nc<m && !vis[nr][nc] && arr[nr][nc] == 1) {
+                            vis[nr][nc]=1;
+                            q.push({nr, nc});
+                        }
+                    }
+                }
+                sort(shape.begin(), shape.end());
+                st.insert(shape);
+            }
+        }
+    }
+
+    return  static_cast<int>(st.size()); //since .size() function returns size_type
+}
