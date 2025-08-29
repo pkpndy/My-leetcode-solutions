@@ -26,7 +26,7 @@ public:
             adjList[v].push_back(u); //To take course u, you must first take course v
         }
         bool result;
-        vector<int> vis(n, 0); //0 means unvisited
+        vector<int> vis(n, 0); // 0 = unvisited, 1 = visiting, 2 = safe
         for(int i=0; i<n; i++) {
             if(!vis[i]) {
                 if(!dfs(i, adjList, vis)) return false; 

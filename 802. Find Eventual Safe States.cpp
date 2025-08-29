@@ -16,9 +16,11 @@ public:
 
     vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
         int n = graph.size();
-        vector<int> vis(n, 0);
+        vector<int> vis(n, 0); // 0 = unvisited, 1 = visiting, 2 = safe
         vector<int> result;
         for(int i=0; i<n; i++) {
+            //don't check for !vis[i] as will miss the nodes that came during dfs calls of any previous nodes
+            //but we want to check path starting from each node
             if(dfs(i, vis, graph)) { //if no cycles found for this i on all possible paths, then its safe
                 result.push_back(i); //push this node
             }
