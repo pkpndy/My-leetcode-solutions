@@ -34,4 +34,33 @@ public:
         reverse(result.begin(), result.end()); //reverse the result as we made a list from last node
         return result;
     }
+
+    //this is a topological sort(DAG) related problem
+    //kahn's algorithm (bfs)
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        int n = numCourses;
+        vector<vector<int>> adjList(n);
+        vector<int> indegree(n, 0);
+        vector<int> result;
+        for(auto adj : prerequisites) {
+            int u = adj[0];
+            int v = adj[1];
+            adjList[v].push_back(u);
+            indegree[u]++;
+        }
+
+        queue<int> q;
+        for(int i=0; i<n; i++)  if(indegree[i] == 0)    q.push(i);
+
+        while(!q.empty()) {
+            int node = q.front(); q.pop();
+            result.push_back(node);
+            for(int adj : adjList[node]) {
+                indegree[adj]--;
+                if(indegree[adj]==0)    q.push(adj);
+            }
+        }
+        if(result.size() != n)  return {};
+        return result;
+    }
 };

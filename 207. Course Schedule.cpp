@@ -34,4 +34,33 @@ public:
         }
         return true;
     }
+    
+    //topological sort has same kind of algorithm
+    //this is kahn's algorithm, that is slight modification of bfs, by pushing indegree 0 into the queue
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        int n = numCourses;
+        vector<vector<int>> adjList(n);
+        vector<int> indegree(n, 0);
+        for(auto adj : prerequisites) {
+            int u = adj[0];
+            int v = adj[1];
+            adjList[v].push_back(u);
+            indegree[u]++;
+        }
+
+        queue<int> q;
+        for(int i=0; i<n; i++)  if(indegree[i] == 0)    q.push(i);
+        int processed = 0;
+        while(!q.empty()) {
+            int node = q.front(); q.pop();
+            processed++;
+            for(int adj : adjList[node]) {
+                indegree[adj]--;
+                if(indegree[adj] == 0)  q.push(adj);
+            }
+        }
+
+        if(processed == n)  return true;
+        return false;
+    }
 };
