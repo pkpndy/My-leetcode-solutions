@@ -33,7 +33,7 @@ vector<int> dijkstra(vector<vector<int>> &vec, int vertices, int edges, int sour
     //container : underlying container that stores the elements, 
     //            must be a random access container
     //comparator : priority_queue default behaviour is max heap, but we want min heap
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq;
     
     pq.push({0, source}); //we start {distance for sourceNode, sourceNode}
     minDist[source] = 0; //mark the distance taken for reaching sourceNode
