@@ -1,6 +1,6 @@
 #include<queue>
 
-//this is prims algorithm
+//this is prims algorithm, but this gives TLE
 int minimumSpanningTree(vector<vector<int>>& edges, int n)
 {
   vector<vector<pair<int, int>>> adjList(n);
@@ -32,4 +32,62 @@ int minimumSpanningTree(vector<vector<int>>& edges, int n)
   }
 
   return sum;
+}
+
+//this is kruskal's algorithm, that uses disjoint set, findUParent and union
+#include<algorithm>
+
+class DisjointSet {
+  vector<int> parent, rank, size;
+  public:
+    DisjointSet(int n) {
+      rank.resize(n+1, 0);
+      size.resize(n+1, 1);
+      parent.resize(n+1);
+      for(int i=0; i<=n; i++) {
+        parent[i] = i;
+      }
+    }
+
+    int findUParent(int node) {
+      if(node == parent[node])
+        return node;
+      return parent[node] = findUParent(parent[node]);
+    }
+
+    void unionByRank(int u, int v) {
+      int ulp_u = findUParent(u);
+      int ulp_v = findUParent(v);
+      if(ulp_u == ulp_v)  return;
+      if(rank[ulp_u] < rank[ulp_v]) {
+        parent[ulp_u] = ulp_v;
+      } else if (rank[ulp_u] > rank[ulp_v]) {
+        parent[ulp_v] = ulp_u;
+      } else {
+        rank[ulp_u]++;
+        parent[ulp_v] = ulp_u;
+      }
+    }
+};
+
+static bool compareEdges(const vector<int>& a, const vector<int>& b) {
+  return a[2] < b[2]; //compare by weight
+}
+
+int minimumSpanningTree(vector<vector<int>>& edges, int n)
+{
+  int minWt = 0;
+  sort(edges.begin(), edges.end(), compareEdges); //we sort the edges by weight to get the smallest weights first
+
+  DisjointSet ds(n); //then we create n nodes each as an independent component initially
+
+  for(const auto edge: edges) {
+    int u = edge[0], v = edge[1], wt = edge[2];
+    if(ds.findUParent(u) != ds.findUParent(v)) { //if these two nodes don't belong to the same component
+      minWt += wt; //then add the edge weight
+      ds.unionByRank(u, v); //connect both the nodes
+    }
+  }
+
+  return minWt;
 }
