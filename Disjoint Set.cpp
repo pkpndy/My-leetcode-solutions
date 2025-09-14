@@ -35,8 +35,8 @@ class DisjointSet {
                 parent[ulp_v] = ulp_u;
             }
             else { //if the ranks are equal
-                parent[ulp_v] = ulp_u;
-                rank[ulp_u]++;
+                parent[ulp_v] = ulp_u; //ultimate parent of v gets attached to ultimate parent of u
+                rank[ulp_u]++; //hence the rank of the ultimate parent of u increases
             }
         }
 
@@ -48,11 +48,13 @@ class DisjointSet {
             if(ulp_u == ulp_v)  return; //if the belong to the same component, do nothing
             //if they dont, then check the size of both and attach the smaller one to the larger one
             if(size[ulp_u] < size[ulp_v]) {
-                parent[ulp_u] = ulp_v;
-                size[ulp_v] += size[ulp_v];
+                parent[ulp_u] = ulp_v; //ultimate parent of u gets attached to ultimate parent of v
+                //the size of the ultimate parent of v will increase by the size of ultimate parent of u
+                size[ulp_v] += size[ulp_v]; 
             }
             else { //this will take equal and size[ulp_u] > size[ulp_v] into consideration
-                parent[ulp_v] = ulp_u;
+                parent[ulp_v] = ulp_u; //ultimate parent of v gets attached to ultimate parent of u
+                //the size of the ultimate parent of u will increase by the size of ultimate parent of v
                 size[ulp_u] += size[ulp_v];
             }
         }
