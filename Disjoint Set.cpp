@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+//DisjointSet helps in union or merging of components dynamically
 class DisjointSet {
     vector<int> parent, rank, size;
     public:
