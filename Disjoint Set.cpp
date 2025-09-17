@@ -6,8 +6,8 @@ class DisjointSet {
     vector<int> parent, rank, size;
     public:
         DisjointSet(int n) {
-            rank.resize(n+1, 0); //n+1 to accomodate the nodes if start from 1
-            size.resize(n+1, 1); //n+1 to accomodate the nodes if start from 1
+            rank.resize(n+1, 0); //rank will be 0 because no component or node is connect beneath them
+            size.resize(n+1, 1); //size will be 1 in the start as all the nodes have themselves
             parent.resize(n+1);
             for(int i=0; i<=n; i++) {
                 parent[i] = i; //in the start every node is the parent of itself
