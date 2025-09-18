@@ -37,7 +37,6 @@ public:
     int largestIsland(vector<vector<int>>& grid) {
         int n = grid.size();
         DisjointSet ds(n*n); //all the cells will be treated as an individual node
-        vector<int> nodes(n*n); //these are all the nodes
         //the relation between any cell being the node will be => (row*n)+col
         //row*n tells in which row the cell is present and plus col will give the exact column
 
