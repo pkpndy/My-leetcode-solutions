@@ -42,33 +42,37 @@ public:
 
     //in the DisjointSet we will treat each row and column as a node, not each cell
     int removeStones(vector<vector<int>>& stones) {
-        int n = stones.size();
-        int m = stones[0].size();
-        vector<vector<int>> mat(n, vector<int> (m, 0));
-        DisjointSet ds(n*m);
-
+        int maxCol = 0, maxRow = 0; //stones is not the matrix but an array of coorndinates of the stones
         for(auto it: stones) {
-            int x = it[0];
-            int y = it[1];
-            mat[x][y]=1;
+            int row = it[0];
+            int col = it[1];
+            maxRow = max(row, maxRow); //largest row index in input
+            maxCol = max(col, maxCol); //largest col index in input
         }
 
-        int dr[] = {-1, 0, 1, 0};
-        int dc[] = {0, 1, 0, -1};
+        //+2 because +1 for 0 based indexing to include maxRow(exact number) as 0 to n doesn't include the n,
+        //another +1 to shift start the cols just after rows as adding only 0 will start the col node number
+        //from the maxRow number 
+        DisjointSet ds(maxRow + maxCol + 2);
+        
+        unordered_map<int, int> stoneNodes; //to keep track which nodes (rows and cols) are actually used in DS
+        
+        for(auto it: stones) { 
+            int nodeRow = it[0]; //treat the rows as nodes
+            int nodeCol = it[1] + maxRow + 1; //we shifted node no. of cols so they don't overlap with row node nos
+            ds.unionBySize(nodeRow, nodeCol); //if a stone is at (row, col), connect row with col
+            stoneNodes[nodeRow]=1; //we only care about unique keys (nodes), values don't matter
+            stoneNodes[nodeCol]=1; //we only care about unique keys (nodes), values don't matter
+        }
 
-        for(int i=0; i<n; i++) {
-            for(int j=0; j<m; j++) {
-                if(mat[i][j]==0)    continue;
-                int nodeNo = (i*n)+j;
-                for(int k=0; k<4; k++) {
-                    int nr = i+dr[k];
-                    int nc = j+dc[k];
-                    if(nr>=0 && nc>=0 && nr<n && nc<m && mat[nr][nc]==1) {
-                        int adjNodeNo = (nr*n)+nc;
-                        ds.unionBySize(nodeNo, adjNodeNo);
-                    } 
-                }
+        int count=0;
+        for(auto it: stoneNodes) { //iterate the map 
+            if(ds.findUParent(it.first) == it.first) { //if the ultimate parent of the node is himself
+                count++; //then it is a connected component
             }
         }
+        int n=stones.size(); //n is the number of stones, and we have postions of stones in the array
+
+        return n-count;
     }
 };
