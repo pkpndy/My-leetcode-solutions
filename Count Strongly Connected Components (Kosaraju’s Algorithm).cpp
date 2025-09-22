@@ -54,7 +54,7 @@ int stronglyConnectedComponents(int v, vector<vector<int>> &edges)
 		int node = st.top();
 		st.pop();
 		if(!vis[node]) {
-			scc++;
+			scc++; //start of each new component will represent a new scc
 			dfs2(node, vis, adjRev);
 		}
 	}
