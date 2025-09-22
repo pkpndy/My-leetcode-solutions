@@ -14,8 +14,10 @@ public:
             if(vis[it] == 0) { //if the adjacent node is not visited
                 dfs(it, node, vis, adjList, tin, low, bridges); //make the dfs call for this node
                 low[node] = min(low[it], low[node]); //we store the lowest time to reach this node
-                //if the lowest time taken to reach adjacent node is greater than 
-                //time taken to reach the current node
+                
+                //if there was any other path to this adjacent node(it), then the lowest time taken 
+                // to reach it would have been same or less then tin[node],
+                // if its greater then the only way to reach it is through our current node
                 if(low[it] > tin[node]) {
                     bridges.push_back({node, it}); //then its a bridge
                 }
