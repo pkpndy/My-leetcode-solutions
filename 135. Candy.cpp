@@ -46,14 +46,14 @@ public:
                 continue;
             }
             //when there is increasing slope
-            peak=1;
+            peak=1; //peak will climb the slope till the slope changes
             while(i<n && ratings[i] > ratings[i-1]) {
                 peak += 1;
                 sum += peak;
                 i++;
             }
             //when there is decreasing slope
-            down=1;
+            down=1; //down will go down the slope till the slop changes
             while(i<n && ratings[i] < ratings[i-1]) {
                 sum += down;
                 down += 1;
