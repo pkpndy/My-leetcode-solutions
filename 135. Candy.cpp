@@ -1,6 +1,8 @@
 class Solution {
 public:
     //naive solution
+    //here we try to satify both side neighbours
+    //because rule applies to both side neighbours of all elements not just one side neighbours
     int candy(vector<int>& ratings) {
         int n = ratings.size();
         vector<int> left(n), right(n);
@@ -43,8 +45,11 @@ public:
             if(ratings[i] == ratings[i-1]) { //when the slope is flat
                 sum += 1;
                 i++;
-                continue;
+                continue; //skip this iteration
             }
+//When moving uphill, we’re assigning to the child we just reached (hence increment first).
+// When moving downhill, we’re assigning to the child we’re leaving (hence increment after).
+
             //when there is increasing slope
             peak=1; //peak will climb the slope till the slope changes
             while(i<n && ratings[i] > ratings[i-1]) {
