@@ -1,5 +1,24 @@
 class Solution {
 public:
+    //this is brute force approach where we try all the subarrays
+    int findMaxLength(vector<int>& nums) {
+        int maxLen=0;
+        for(int i=0; i<nums.size(); i++) {
+            int sum=0; //sum should be inside because we calculate sum for every subarray starting with i
+            for(int j=i; j<nums.size(); j++) {
+                if(nums[j]==0) {
+                    sum--;
+                } else {
+                    sum++;
+                }
+                if(sum==0) {
+                    maxLen=max(maxLen, j-i+1); //i+1 because if i and j are both at the same element then length should be 1 not 0
+                }
+            }
+        }
+        return maxLen;
+    }
+
     int findMaxLength(vector<int>& nums) {
         unordered_map<int, int> firstSeen; // {prefixSum -> index}
         firstSeen[0]=-1; //base: before array starts
