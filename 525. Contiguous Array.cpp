@@ -4,7 +4,7 @@ public:
     int findMaxLength(vector<int>& nums) {
         int maxLen=0;
         for(int i=0; i<nums.size(); i++) {
-            int sum=0; //sum should be inside because we calculate sum for every subarray starting with i
+            int sum=0; //sum should be inside because we calculate sum for every subarray starting with i till j
             for(int j=i; j<nums.size(); j++) {
                 if(nums[j]==0) {
                     sum--;
