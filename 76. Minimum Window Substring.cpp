@@ -1,55 +1,53 @@
-string minWindow(string s, string t) {
-        //if there is no string t to check in s
-        if(t.size() == 0)   return "";
-
-        // hashmap for chars freq in t and our current window
-        unordered_map<char, int> window, countT;
-        for(char c: t) { // storing freq of chars in t
-            countT[c]++;
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        int n = s.size();
+        if(t.size() > n) { //if the string we are trying to find is greater
+            return "";
         }
 
-        // have is the total freq of chars matching in current window and countT
-        // need is the total equal freq of chars we need 
-        int have=0, need=countT.size();
-        // to store the start and end of current result string
-        pair<int, int> res = {-1, -1};
+        //we will store the frequency of all the characters be it in s or t
+        unordered_map<char, int> freq; //{character, frequency}
+        for(char &c: t)  freq[c]++; //store the frequency of characters present in t
 
-        // to store the length of the resulting string as in the
-        // end the r will cross the string size due to iteration
-        int resLen = INT_MAX;
-        int l=0;
+        //store the number of characters present in t,
+        //this will help in checking if we found the characters in our current window
+        int reqCount = t.size();
+        int minWindowSize = INT_MAX; //to only store the min size window
+        int start_i = 0; //for cutting the substring from s
+        int i=0, j=0; //the two pointers
+        
+        while(j<n) { //till j doesn't cross the n
+            char ch = s[j]; //for every j we check
 
-        for(int r=0; r < s.size(); r++) {
-            char c = s[r]; 
-            window[c]++; // increase the freq of current char
+            //if the character we found is one of the character we were looking for
+            if(freq[ch] > 0)  reqCount--; //decrease the required char count
 
-            if(countT.count(c) && window[c] == countT[c]) {
-                // if curr char exists in t and the freq of char
-                // is equal in our current window and t
-                have++;
-            }
+            //we decrease the frequency irrespective of if it was present in t or not
+            freq[ch]--;
+            
+            while(reqCount == 0) { //if we found all the characters we needed
+                //start shrinking the window
+                int currWindowSize = j-i+1; //calculate the current window size
 
-            while(have == need) {
-            // till have and need are equal store the minimum length
-            // of string required to keep the resulting solution
-                if(r - l + 1 < resLen) {
-                    resLen = r-l+1;
-                    res = {l, r};
+                if(currWindowSize < minWindowSize) { //check if its minimum
+                    minWindowSize = currWindowSize;
+                    start_i = i; //store the starting of this min window
                 }
 
-                // decrease the freq of the char at l as 
-                // it is window is sliding and moving forward
-                window[s[l]]--;
+                //we are excluding the character from the window then 
+                //increase its frequency back
+                freq[s[i]]++;
 
-                //if char at l exists in t and when you decrement window[s[l]]--              
-                //(because you're sliding l++), the count of that character 
-                //might drop below what's needed.
-                if(countT.count(s[l]) && window[s[l]] < countT[s[l]]) {
-                    have--;
-                }
-                l++;
+                //if this character's freq increase above 0 that means this 
+                //was one of the required characters
+                if(freq[s[i]] > 0) reqCount++;
+
+                i++; //increase i to shrink window
             }
+            j++; //increase j to expand window
         }
-        //if the no changes was done in resLen means no result found
-        return resLen == INT_MAX ? "" : s.substr(res.first, resLen);
+
+        return minWindowSize == INT_MAX ? "" : s.substr(start_i, minWindowSize);
     }
+};
