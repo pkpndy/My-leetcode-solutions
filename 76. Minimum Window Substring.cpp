@@ -26,8 +26,8 @@ public:
             //we decrease the frequency irrespective of if it was present in t or not
             freq[ch]--;
             
+            //start shrinking the window, to get the minWindow and required count is still 0
             while(reqCount == 0) { //if we found all the characters we needed
-                //start shrinking the window
                 int currWindowSize = j-i+1; //calculate the current window size
 
                 if(currWindowSize < minWindowSize) { //check if its minimum
