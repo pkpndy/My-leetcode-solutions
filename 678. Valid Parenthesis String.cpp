@@ -1,7 +1,9 @@
 class Solution {
 public:
     bool isValid(string& s, int position, int count, vector<vector<int>>& dp) {
+        //check the count<0 first because if count is already below 0 everything else doesn't matter
         if(count<0) return false;
+
         if(position == s.size())  return count==0;
 
         if(dp[position][count] != -1)   return dp[position][count];
@@ -27,6 +29,25 @@ public:
             return true;
         }
         return false;
+    }
+
+    bool checkValidString(string s) {
+        int open=0, close=0; //we keep track of opening and closing bracket counts
+        // forward pass: make sure we never have more ')' than '(' + '*'
+        for(int i=0; i<s.size(); i++) {
+            if(s[i]=='(') open++;
+            else if(s[i]==')')  open--;
+            else    open++;
+            if(open<0)  return false; //we found more closing brackets
+        }
+        // backward pass: make sure we never have more '(' than ')' + '*'
+        for(int i=s.size()-1; i>=0; i--) {
+            if(s[i]==')') close++;
+            else if(s[i]=='(')  close--;
+            else    close++;
+            if(close<0)  return false; //we found more opening brackets
+        }
+        return true;
     }
 
     bool checkValidString(string s) {
