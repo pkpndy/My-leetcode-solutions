@@ -82,22 +82,22 @@ public:
 
         if(stop)    return; //if the pointers cross stop
 
+        if(first==node || first->next==node) { //if they meet or cross stop linking
+            node->next=nullptr;
+            stop=true;
+            return;
+        }
+
         // connect current end node (node) with current front node (first)
         ListNode* firstNext=first->next;
         first->next=node;
         node->next=firstNext;
         first=firstNext; //move front pointer
-
-        if(first==node || first->next==node) { //if they meet or cross stop linking
-            node->next=nullptr;
-            stop=true;
-        }
     }
 
     void reorderList(ListNode* head) {
         if(!head || !head->next)    return;
-        ListNode* end=head;
         first=head;
-        curse(end);
+        curse(head);
     }
 };
