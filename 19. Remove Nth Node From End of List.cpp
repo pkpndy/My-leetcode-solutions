@@ -1,21 +1,25 @@
-ListNode* removeNthFromEnd(ListNode* head, int n) {
-        if(head->next == nullptr && n == 1)   return nullptr; //edge case
-
-        ListNode* prev = nullptr; // to track previous
-        ListNode* curr = head; // current node
-        ListNode* ahead = head; // to track the distance from the last node
-        int i=1;
-        while(i != n) {
-            ahead = ahead->next; //sending ahead to the nth node
-            i++;
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        // Create a dummy node to handle edge cases (like deleting the head)
+        ListNode* dummy = new ListNode(0, head);
+        ListNode* ahead=dummy;
+        ListNode* behind=dummy;
+        // Move ahead n+1 steps so the gap between ahead and behind is n
+        for(int i=0; i<=n; i++) {
+            ahead=ahead->next;
         }
-        while(ahead->next != nullptr) { // moving the pointers to the desired node to be removed
-            prev = curr;
-            curr = curr->next;
-            ahead = ahead->next;
+        // Move both pointers until ahead reaches the end
+        while(ahead != nullptr) {
+            behind=behind->next;
+            ahead=ahead->next;
         }
-        if(prev == nullptr) head = curr->next; // if the node to be removed is the first node
-        else    prev->next = curr->next; // else it is some node in the middle
+        
+        // Now behind is just before the node to delete
+        ListNode* nodeToDelete = behind->next;
+        behind->next=behind->next->next;
+        delete nodeToDelete;
 
-        return head;
+        return dummy->next; // return new head (in case head was deleted)
     }
+};
