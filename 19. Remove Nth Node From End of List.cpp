@@ -2,6 +2,7 @@ class Solution {
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
         // Create a dummy node to handle edge cases (like deleting the head)
+        // All the nodes are just before the head in the start
         ListNode* dummy = new ListNode(0, head);
         ListNode* ahead=dummy;
         ListNode* behind=dummy;
@@ -9,7 +10,7 @@ public:
         for(int i=0; i<=n; i++) {
             ahead=ahead->next;
         }
-        // Move both pointers until ahead reaches the end
+        // Move both pointers until ahead crosses the linkedlist
         while(ahead != nullptr) {
             behind=behind->next;
             ahead=ahead->next;
