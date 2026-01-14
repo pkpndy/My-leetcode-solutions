@@ -11,22 +11,22 @@
 class Solution {
 public:
     ListNode* oddEvenList(ListNode* head) {
-        if(!head || !head->next)    return head;
-        ListNode dummy1(0, head);
-        ListNode dummy2(0, head->next);
+        if (!head || !head->next) return head;
 
-        ListNode* odd = dummy1.next;
-        ListNode* even = dummy2.next;
+        ListNode* odd = head;
+        ListNode* even = head->next;
+        ListNode* evenHead = even;
 
-        while(even && even->next) {
-            odd->next=even->next;
-            even->next= (even->next) ? even->next->next : nullptr;
-            odd=odd->next;
-            even=even->next;
+        while (even && even->next) {
+            odd->next = even->next;
+            odd = odd->next;
+
+            even->next = odd->next;
+            even = even->next;
         }
 
-        odd->next = dummy2.next; //odd wale ke last ko even ke first se conenct kr do
+        odd->next = evenHead; //odd wale ke last ko even ke first se conenct kr do
 
-        return dummy1.next;
+        return head;
     }
 };
