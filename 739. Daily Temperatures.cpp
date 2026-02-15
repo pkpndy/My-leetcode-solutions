@@ -1,24 +1,26 @@
 class Solution {
 public:
     vector<int> dailyTemperatures(vector<int>& temperatures) {
-        //kyuki question mein agle warm din ko pucha hai
-        //hm temp array mein peeche se aate time agle warm din ko store rkhenge 
-        //fir colder din store krte jayenge
-
-        stack<int> st;
         int n = temperatures.size();
-        vector<int> res(n, 0);
-        for(int i=n-1; i>=0; i--) { //peeche se traverse kr rhe hain temperatures array ko
-        //jb tk stack khali nhi hai aur stack ke top pe aaj wale din se thande din bhre hue hain
-            while(!st.empty() && temperatures[i] >= temperatures[st.top()]){
-                st.pop(); //tb tk stack khali karo
+        vector<int> ans(n);
+        stack<pair<int, int>> st; //{temperature, index}
+
+        //next greater right khojna hai
+        for(int i=0; i<n; i++) {
+            //jbtk abhi wale temperature se zyada temperature stack top mein milta hai
+            while(!st.empty() && temperatures[i] > temperatures[st.top().second]) {
+                int index = st.top().second;
+                ans[index]=i-index;
+                st.pop();
             }
-            if(!st.empty()) { //agar stack khali nhi hua mtlb zarur aage koi warmer din hoga
-               res[i] = st.top() - i; //difference between both the days
-            }
-    
-            st.push(i); //ye sb ke baad din ko push kr do wo array mein aage se aane pe sbse garam din hoga
+            st.push({temperatures[i], i});
         }
-        return res;
+        // last mein jo jo stack mein reh gye unko unse zyada temperature wale din nhi mile
+        while(!st.empty()) {
+            int index = st.top().second;
+            ans[index]=0;
+            st.pop();
+        }
+        return ans;
     }
 };
