@@ -23,6 +23,7 @@ public:
             ListNode* groupNext = kth->next; //next group starts after kth node
             //below nodes will be used for traversal
             ListNode* curr = groupPrev->next; //current group will start after previous group
+            //we start prev from next group start bcoz we want to link the first node to the 
             ListNode* prev = kth->next; //we point prev at the next group start
             while(curr != groupNext) { //we loop till curr doesn't reach next group start
                 ListNode* tmp = curr->next;//we will change the next of the current,so we store it
