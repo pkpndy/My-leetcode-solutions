@@ -7,7 +7,8 @@
 //             return;
 //         }
 
-//         for(int i=0; i<nums.size(); i++) { //loop to check the unvisited nums
+//         for(int i=0; i<nums.size(); i++) { //hr recursive call mein i ko 0th index se start krenge
+                //visited array will take care of 
 //             if(!visited[i]) { //only visit the unvisited numbers
 //                 ds.push_back(nums[i]); //add to current permutation
 //                 visited[i] = 1; //mark visited so others can be chosen
