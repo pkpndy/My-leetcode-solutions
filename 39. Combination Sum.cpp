@@ -25,3 +25,31 @@ public:
         return ans;
     }
 };
+
+//upar wale ke alwa ye bhi ek solution hai
+class Solution {
+public:
+    void cs(int i, vector<int>& candi, int tar, vector<int>& ds, vector<vector<int>>& result) {
+        if(tar==0) {
+            result.push_back(ds);
+            return;
+        }
+
+        for(int j=i; j<candi.size(); j++) {
+            if(candi[j] > tar) break;
+            ds.push_back(candi[j]);
+            cs(j,candi, tar-candi[j], ds, result);
+            ds.pop_back();
+        }
+    }
+
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        sort(candidates.begin(), candidates.end());
+        vector<vector<int>> result;
+        vector<int> ds;
+
+        cs(0, candidates, target, ds, result);
+
+        return result;
+    }
+};
