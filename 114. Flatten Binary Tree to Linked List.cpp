@@ -29,15 +29,15 @@ public:
             
             // Move left flattened sequence to the right side
             node->right = node->left;
-            node->left = nullptr; // Crucial step! Clear the left pointer
+            node->left = nullptr; // Crucial step! Clear the left pointer, only for the node we have
             
             // Connect the tail of the left sequence to the head of the right sequence
             leftTail->right = originalRight;
         }
         
         // Step 3: Return the ultimate tail of the current modified tree
-        if (rightTail != nullptr) return rightTail;
-        return leftTail;
+        if (rightTail != nullptr) return rightTail; //if there was any right then send tail of that
+        return leftTail; //if there was no right then leftTail became the right skewed tree tail
     }
 
     void flatten(TreeNode* root) {
