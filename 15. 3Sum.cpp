@@ -1,35 +1,25 @@
 class Solution {
 public:
-    //remember 3sum has implementation of 2sum involved
     vector<vector<int>> threeSum(vector<int>& nums) {
         vector<vector<int>> result;
-        int n = nums.size();
-        if (n < 3) return result; //if the nums array is smaller than 3 then return the empty array
-        sort(nums.begin(), nums.end()); //sort the array since it hasn't asked for indexes
-        
-        for(int i=0; i<n-2; i++) { //this will be the first number of the triplet
-            //skip the very first number of the triplet if its
-            //already been used once to create a triplet
-            if(i>0 && nums[i]==nums[i-1])   continue; //skip the entire iteration
+        sort(nums.begin(), nums.end()); //sort the array for using two pointer
 
-            int left=i+1; //this will be the second number of the triplet
-            int right=n-1; //this will be the third number of the triplet
-
-            while(left < right) { //we are doing two sum implementation here
-                int sum = nums[i]+nums[left]+nums[right];
-                if(sum==0) {
-                    result.push_back({nums[i], nums[left], nums[right]});
-                    //since these numbers are added to the result
-                    //we skip the numbers so that they don't create duplicates
-                    while(left<right && nums[left] == nums[left+1])   left++;
-                    while(left<right && nums[right] == nums[right-1]) right--;
-
-                    //move the iterators forward after these numbers have been pushed
-                    left++;
-                    right--;
+        for(int i=0; i<nums.size()-2; i++) {
+            if (i>0 && nums[i] == nums[i-1]) { //if i got a duplicate
+                continue;
+            }
+            int j=i+1, k=nums.size()-1;
+            while(j<k) { //we are doing two sum implementation here
+                int sum = nums[i]+nums[j]+nums[k];
+                if(sum==0) { //if we found the sum==0, then look further
+                    result.push_back({nums[i], nums[j], nums[k]});
+                    j++; k--;
+                    while (j<k && nums[j] == nums[j-1]) j++; //if j got a duplicate 
+                    while (j<k && nums[k] == nums[k+1]) k--; //if k got a duplicate
                 }
-                else if(sum<0)  left++; //if the sum we got is less than 0 then increase left
-                else    right--; //else decrease right for sum more than 0
+
+                else if(sum<0)   j++; //if sum is less than 0
+                else   k--; //if sum is greater than 0
             }
         }
         return result;
